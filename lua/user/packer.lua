@@ -24,8 +24,10 @@ return require('packer').startup(function(use)
   use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
   use('nvim-treesitter/playground')
   use('theprimeagen/harpoon')
+  use('thoughtbot/vim-rspec')
   use('mbbill/undotree')
   use('tpope/vim-fugitive')
+  use('tpope/vim-rails')
   use('tpope/vim-surround')
   use {'VonHeikemen/lsp-zero.nvim',
   requires = {

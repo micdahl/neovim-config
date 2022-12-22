@@ -6,6 +6,7 @@ lsp.ensure_installed({
   'eslint',
   'pyright',
   'rust_analyzer',
+  'solargraph',
   'sumneko_lua',
 })
 
