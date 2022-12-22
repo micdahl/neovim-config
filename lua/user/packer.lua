@@ -22,6 +22,7 @@ return require('packer').startup(function(use)
   })
 
   use { 'feline-nvim/feline.nvim', branch = '0.5-compat' }
+  use('nvim-tree/nvim-web-devicons')
   use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
   use('nvim-treesitter/playground')
   use('theprimeagen/harpoon')
