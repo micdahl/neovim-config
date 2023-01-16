@@ -57,8 +57,6 @@ require('packer').startup(function(use)
   use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
 
-  use 'navarasu/onedark.nvim' -- Theme inspired by Atom
-
   use({
 	  'rose-pine/neovim',
 	  as = 'rose-pine',
@@ -81,6 +79,7 @@ require('packer').startup(function(use)
   use('theprimeagen/harpoon')
   use('mbbill/undotree')
   use('psf/black')
+  use('thoughtbot/vim-rspec')
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -166,6 +165,7 @@ vim.g.maplocalleader = ' '
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -303,10 +303,10 @@ require('nvim-treesitter.configs').setup {
     swap = {
       enable = true,
       swap_next = {
-        ['<leader>a'] = '@parameter.inner',
+        ['<leader>i'] = '@parameter.inner',
       },
       swap_previous = {
-        ['<leader>A'] = '@parameter.inner',
+        ['<leader>I'] = '@parameter.inner',
       },
     },
   },
@@ -317,6 +317,12 @@ vim.api.nvim_command("augroup fmt")
 vim.api.nvim_command("autocmd!")
 vim.api.nvim_command("autocmd BufWritePre *.py undojoin | Black")
 vim.api.nvim_command("augroup END")
+
+-- RSpec.vim mappings
+vim.keymap.set('n', '<Leader>t', ':call RunCurrentSpecFile()<CR>')
+vim.keymap.set('n', '<Leader>s', ':call RunNearestSpec()<CR>')
+vim.keymap.set('n', '<Leader>l', ':call RunLastSpec()<CR>')
+vim.keymap.set('n', '<Leader>r', ':call RunAllSpecs()<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
@@ -464,14 +470,5 @@ cmp.setup {
 
 require("luasnip.loaders.from_vscode").lazy_load()
 
-function ColorMyPencils(color)
-	color = color or "rose-pine"
-	vim.cmd.colorscheme(color)
-
-	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-end
-
-ColorMyPencils()
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
