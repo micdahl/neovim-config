@@ -58,6 +58,9 @@ require('packer').startup(function(use)
   use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
 
+  -- dispatch
+  use 'tpope/vim-dispatch'
+
   use({
 	  'folke/tokyonight.nvim',
   })
@@ -77,6 +80,8 @@ require('packer').startup(function(use)
   use('mbbill/undotree')
   use('psf/black')
   use('thoughtbot/vim-rspec')
+
+  use('github/copilot.vim')
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -494,5 +499,12 @@ cmp.setup {
 require("luasnip.loaders.from_vscode").lazy_load()
 
 vim.cmd[[colorscheme tokyonight-night]]
+
+vim.g.copilot_no_tab_map = true
+vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+
+vim.g.rspec_command = "Dispatch rspec {spec}"
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
