@@ -18,6 +18,8 @@ require('packer').startup(function(use)
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
 
+      'jose-elias-alvarez/null-ls.nvim',
+      'MunifTanjim/prettier.nvim',
 
       -- Additional lua configuration, makes nvim stuff amazing
       'folke/neodev.nvim',
@@ -74,7 +76,16 @@ require('packer').startup(function(use)
   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
 
   -- Fuzzy Finder (files, lsp, etc)
-  use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
+  use { 'nvim-telescope/telescope.nvim',
+        branch = '0.1.x',
+        requires = {
+            "nvim-telescope/telescope-live-grep-args.nvim",
+            'nvim-lua/plenary.nvim'
+        },
+        config = function()
+            require("telescope").load_extension("live_grep_args")
+        end
+    }
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
@@ -285,7 +296,7 @@ vim.keymap.set('n', '<leader>fd', builtin.help_tags, { desc = '[Find] [D]iagnost
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'ruby', 'rust', 'typescript', 'help', 'vim' },
+  ensure_installed = { 'c', 'cpp', 'javascript', 'go', 'lua', 'python', 'ruby', 'rust', 'typescript', 'help', 'vim' },
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python', 'ruby' } },
